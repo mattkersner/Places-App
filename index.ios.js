@@ -70,7 +70,9 @@ export default class Places extends Component {
           selected={this.state.selectedTab === 0}
           onPress={this.handleTabPress.bind(this, 0)}
         >
-        <PlaceMap annotations={this.state.annotations} />
+        <PlaceMap
+          annotations={this.state.annotations}
+          onAddPlace={this.handleAddPlace.bind(this)} />
       </TabBarIOS.Item>
       <TabBarIOS.Item
         title="Place"

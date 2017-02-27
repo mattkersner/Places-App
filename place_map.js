@@ -7,6 +7,7 @@ import {
   Text,
   Linking }
 from 'react-native';
+import axios from 'axios';
 
 export default class PlaceMap extends Component {
 
@@ -30,10 +31,26 @@ export default class PlaceMap extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }});
+        this.getPlacesData();
       },
       (error) => alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
+  }
+
+  getPlacesData() {
+    console.log('COORDS ========>' + this.state.currentRegion.latitude, this.state.currentRegion.longitude);
+    axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentRegion.latitude},${this.state.currentRegion.longitude}&radius=5000&types=food&keyword=burrito&key=AIzaSyDNhxQlwToYhiZuucMmLly6m_YTz1P0KOQ&limit=20`)
+    .then((response) => {
+      response.data.results.forEach((burrito) => {
+      this.props.onAddPlace({
+          title: burrito.name,
+          latitude: parseFloat(burrito.geometry.location.lat),
+          longitude: parseFloat(burrito.geometry.location.lng),
+          image: require('./assets/burrito.png')
+        });
+      })
+    })
   }
 
   handleNavigation(la, lo) {
@@ -63,6 +80,7 @@ export default class PlaceMap extends Component {
         style={styles.map}
         region={this.state.currentRegion}
         annotations={this.props.annotations}
+        //add beacon for user location
         showsUserLocation={true}
       />
     )

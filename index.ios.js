@@ -35,17 +35,17 @@ export default class Places extends Component {
         {
           title: 'Home',
           latitude: 40.7788104,
-          longitude: 73.94732549999999
+          longitude: -73.94732549999999
         },
         {
           title: 'General Assembly',
           latitude: 40.7398848,
-          longitude: 73.9900818
+          longitude: -73.9900818
         },
         {
           title: 'Shake Shack',
           latitude: 40.7420371,
-          longitude: 73.9875635
+          longitude: -73.9875635
         }
       ]
     }

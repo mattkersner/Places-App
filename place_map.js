@@ -18,7 +18,6 @@ export default class PlaceMap extends Component {
       longitude: 0,
       latitudeDelta: 0.01,
       longitudeDelta: 0.01,
-      title: ""
      }
     }
   }
@@ -27,7 +26,6 @@ export default class PlaceMap extends Component {
     //getting the device geolocation using the navigator object
     navigator.geolocation.getCurrentPosition(
       (position) => {
-       console.log(position);
         this.setState({currentRegion: {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -48,8 +46,8 @@ export default class PlaceMap extends Component {
   }
 
   render() {
-    //adds a button to each favorite place for navigation
     const { annotations } = this.props;
+    //adds a button to each favorite place for navigation
     annotations.forEach(annotation => {
       annotation.rightCalloutView = (
       <TouchableHighlight
@@ -65,6 +63,7 @@ export default class PlaceMap extends Component {
         style={styles.map}
         region={this.state.currentRegion}
         annotations={this.props.annotations}
+        showsUserLocation={true}
       />
     )
   }

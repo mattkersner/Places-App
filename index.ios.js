@@ -31,6 +31,7 @@ export default class Places extends Component {
     super();
     this.state = {
       selectedTab: 0,
+      //initial data to load pins
       annotations: [
         {
           title: 'Home',

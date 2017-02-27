@@ -31,20 +31,23 @@ export default class PlaceMap extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }});
-        this.getPlacesData();
+        this.getBurritoData();
       },
       (error) => alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
   }
 
-  getPlacesData() {
-    console.log('COORDS ========>' + this.state.currentRegion.latitude, this.state.currentRegion.longitude);
+  getBurritoData() {
+    //axios request to get all nearby burrito spots, setting it to annotations to render
+    //on the map
     axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentRegion.latitude},${this.state.currentRegion.longitude}&radius=5000&types=food&keyword=burrito&key=AIzaSyDNhxQlwToYhiZuucMmLly6m_YTz1P0KOQ&limit=20`)
     .then((response) => {
+      console.log(response.data.results[0]);
       response.data.results.forEach((burrito) => {
       this.props.onAddPlace({
           title: burrito.name,
+          subtitle: 'Rating: ' + burrito.rating,
           latitude: parseFloat(burrito.geometry.location.lat),
           longitude: parseFloat(burrito.geometry.location.lng),
           image: require('./assets/burrito.png')
@@ -64,15 +67,15 @@ export default class PlaceMap extends Component {
 
   render() {
     const { annotations } = this.props;
-    //adds a button to each favorite place for navigation
+    //adds a button to each place for navigation
     annotations.forEach(annotation => {
       annotation.rightCalloutView = (
-      <TouchableHighlight
-        style={styles.button}
-        onPress={this.handleNavigation.bind(this, annotation.latitude, annotation.longitude)}
-      >
-      <Text style={styles.buttonText}>Navigation</Text>
-      </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={this.handleNavigation.bind(this, annotation.latitude, annotation.longitude)}
+        >
+        <Text style={styles.buttonText}>Navigation</Text>
+        </TouchableHighlight>
       );
     })
     return (
@@ -99,5 +102,8 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 12,
     color: 'white'
+  },
+  text: {
+    color: 'blue'
   }
 });

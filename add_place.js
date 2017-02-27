@@ -44,6 +44,7 @@ export default class AddPlace extends Component {
     if (!isError) {
       axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.address}&key=AIzaSyBCPfaR4w1Bgm5B4CrrYISWqx0BqsmKEsw`)
       .then((response) => {
+        console.log('coords =======>' + response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng);
         this.props.onAddPlace({
           title,
           latitude: parseFloat(response.data.results[0].geometry.location.lat),

@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import PlaceMap from './place_map';
 import AddPlace from './add_place';
+//trying to add firebase to get places to persist
 import * as firebase from 'firebase';
 
 const firebaseConfig = {
@@ -32,19 +33,19 @@ export default class Places extends Component {
       selectedTab: 0,
       annotations: [
         {
-          title: 'Smithsonian Museum',
-          latitude: 38.8980,
-          longitude: -77.0230
+          title: 'Home',
+          latitude: 40.7788104,
+          longitude: 73.94732549999999
         },
         {
-          title: 'UMCP',
-          latitude: 38.9869,
-          longitude: -76.9426
+          title: 'General Assembly',
+          latitude: 40.7398848,
+          longitude: 73.9900818
         },
         {
-          title: 'Arlington',
-          latitude: 38.8783,
-          longitude: -77.0687
+          title: 'Shake Shack',
+          latitude: 40.7420371,
+          longitude: 73.9875635
         }
       ]
     }
@@ -55,7 +56,7 @@ export default class Places extends Component {
   }
 
   handleAddPlace(annotation) {
-    //add new places added to state annotations to display on map
+    //add new places to state annotations to display pin on map
     const annotations = this.state.annotations.slice();
     annotations.push(annotation);
     this.setState({ annotations });
